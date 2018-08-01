@@ -38,6 +38,10 @@
       "zip"
     ]
   },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true
+  },
   "fileAssociations": [
     {
       "ext": "bpmn",
