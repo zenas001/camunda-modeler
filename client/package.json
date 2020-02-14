@@ -28,7 +28,7 @@
     "diagram-js-minimap": "^2.0.3",
     "diagram-js-origin": "^1.3.1",
     "dmn-js": "^8.0.0-alpha.1",
-    "dmn-js-properties-panel": "^0.3.4",
+    "dmn-js-properties-panel": "^0.4.0-alpha.0",
     "drag-tabs": "^2.2.0",
     "events": "^3.0.0",
     "formik": "^2.0.4",
