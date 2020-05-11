@@ -30,7 +30,9 @@ const SPRING_DEFAULT_URL = 'http://localhost:8080/rest';
 const TOMCAT_DEFAULT_URL = 'http://localhost:8080/engine-rest';
 
 
-describe('<DeploymentTool>', () => {
+describe('<DeploymentTool>', function() {
+
+  this.timeout(10000);
 
   it('should render', () => {
     createDeploymentTool();
