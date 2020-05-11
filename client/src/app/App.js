@@ -135,7 +135,7 @@ export class App extends PureComponent {
     );
 
     if (process.env.NODE_ENV !== 'test') {
-      this.workspaceChanged = debounce(this.workspaceChanged, 1500);
+      this.workspaceChangedDebounced = debounce(this.workspaceChangedDebounced, 1500);
       this.updateMenu = debounce(this.updateMenu, 50);
       this.resizeTab = debounce(this.resizeTab, 50);
     }
@@ -1014,7 +1014,26 @@ export class App extends PureComponent {
     this.handleError(error);
   }
 
-  workspaceChanged = () => {
+  /**
+   * Save workspace debounced.
+   *
+   * @returns {Promise}
+   */
+  workspaceChangedDebounced = () => {
+    return this.workspaceChanged(false);
+  }
+
+  /**
+   * Save workspace. Debounced by default.
+   *
+   * @param {boolean} debounce
+   *
+   * @returns {Promise}
+   */
+  workspaceChanged = (debounce = true) => {
+    if (debounce) {
+      return this.workspaceChangedDebounced();
+    }
 
     const {
       onWorkspaceChanged
@@ -1031,7 +1050,7 @@ export class App extends PureComponent {
       endpoints
     } = this.state;
 
-    onWorkspaceChanged({
+    return onWorkspaceChanged({
       tabs,
       activeTab,
       layout,
@@ -1740,6 +1759,12 @@ export class App extends PureComponent {
   }
 
   async quit() {
+    try {
+      await this.workspaceChanged(false);
+    } catch (error) {
+      log('workspace saved error', error);
+    }
+
     const closeResults = await this.triggerAction('close-all-tabs');
 
     return closeResults.every(result => result);

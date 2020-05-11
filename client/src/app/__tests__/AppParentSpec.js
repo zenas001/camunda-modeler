@@ -133,6 +133,28 @@ describe('<AppParent>', function() {
       }, mount);
     });
 
+
+    it('should return promise on workspace save', async function() {
+
+      // given
+      const workspace = new Workspace({
+        save: () => Promise.resolve()
+      });
+
+      const { appParent } = createAppParent({
+        globals: {
+          workspace
+        }
+      });
+
+      const config = {
+        tabs: []
+      };
+
+      // then
+      expect(appParent.handleWorkspaceChanged(config) instanceof Promise).to.be.true;
+    });
+
   });
 
 
